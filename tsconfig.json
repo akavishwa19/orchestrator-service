@@ -9,7 +9,7 @@
     // See also https://aka.ms/tsconfig/module
     "module": "commonjs",
     "target": "esnext",
-    "types": [],
+    "types": ["node","jest"],
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
@@ -37,7 +37,7 @@
     // Recommended Options
     "strict": true,
     "verbatimModuleSyntax": false,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true
