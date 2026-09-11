@@ -1,0 +1,127 @@
+openapi: "3.0.0"
+
+servers:
+  - url: https://development.gigantic-server.com/v1
+    description: Development server
+
+info:
+  version: 0.0.0
+  title: Git ops
+  description: A simple server leveraging the gitops approach
+  contact:
+    name: Akash Vishwakarma
+    email: akash19102001@gmail.com
+    url: https://www.akashvishwakarma.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+tags:
+  - name: Health Check
+    description: Service health monitoring
+
+security:
+  - bearerAuth: []
+
+paths:
+  /healthz:
+    get:
+      summary: Health check
+      description: Returns the health status of the service
+      operationId: healthCheck
+      tags:
+        - Health Check
+      security: []
+      responses:
+        "200":
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  host:
+                    type: string
+                    example: localhost:3000
+                  method:
+                    type: string
+                    example: GET
+                  status:
+                    type: string
+                    example: healthy
+                  code:
+                    type: integer
+                    example: 200
+        "400":
+          $ref: "#/components/responses/BadRequest"            
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+
+    # SuccessResponse:
+    #   type: object
+    #   properties:
+    #     message:
+    #       type: string
+    #     data:
+    #       type: object
+    #       nullable: true
+    #     success:
+    #       type: boolean
+    #       example: true
+
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: error
+        message:
+          type: string
+
+  responses:
+    BadRequest:
+      description: Invalid request payload
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ErrorResponse"
+              - type: object
+                properties:
+                  message:
+                    example: Invalid payload
+
+    # NotFound:
+    #   description: Resource not found
+    #   content:
+    #     application/json:
+    #       schema:
+    #         allOf:
+    #           - $ref: "#/components/schemas/ErrorResponse"
+    #           - type: object
+    #             properties:
+    #               message:
+    #                 example: User does not exist
+
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ErrorResponse"
+              - type: object
+                properties:
+                  message:
+                    example: Internal server error

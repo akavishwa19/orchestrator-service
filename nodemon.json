@@ -1,0 +1,8 @@
+{
+  "watch": ["src"],
+  "ext": "ts,json",
+  "ignore": ["tests/"],
+  "legacyWatch": true,
+  "delay": "300ms",
+  "exec": "NODE_ENV=development ts-node ./src/app.ts"
+}
